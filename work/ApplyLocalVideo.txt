@@ -1,0 +1,31 @@
+var s=UnityEngine.SceneManagement.SceneManager.GetActiveScene();if(s.path!="Assets/Scenes/ITPLNCampusPLTS.unity"||UnityEditor.EditorApplication.isPlaying)throw new System.Exception("Scene guard");
+UnityEditor.SceneManagement.EditorSceneManager.SaveScene(s,"Backups/LayoutReview-20261123/BeforeLocalVideo-20261124.unity",true);
+var a=s.GetRootGameObjects().SelectMany(g=>g.GetComponentsInChildren<UnityEngine.Transform>(true)).ToArray();
+UnityEditor.Undo.IncrementCurrentGroup();int group=UnityEditor.Undo.GetCurrentGroup();foreach(var g in s.GetRootGameObjects())UnityEditor.Undo.RegisterFullObjectHierarchyUndo(g,"Match local video");
+UnityEngine.Transform One(string n)=>a.Single(t=>t.name==n);
+void Place(string n,UnityEngine.Vector3 p,UnityEngine.Vector3 size){var t=One(n);t.position=p;t.localScale=size;}
+var door=One("Laboratory sliding entrance");door.position=new UnityEngine.Vector3(2.27f,.47f,6.2f);door.rotation=UnityEngine.Quaternion.Euler(0,-90,0);
+Place("South wall",new UnityEngine.Vector3(-2.4f,2.52f,3.06f),new UnityEngine.Vector3(9,4.14f,.15f));
+Place("East wall before doorway",new UnityEngine.Vector3(2.04f,2.52f,4.1f),new UnityEngine.Vector3(.15f,4.14f,2.08f));
+Place("Door header",new UnityEngine.Vector3(2.04f,3.85f,6.2f),new UnityEngine.Vector3(.15f,1.48f,2.12f));
+foreach(var t in a.Where(t=>t.name=="Entrance wall right return"||t.name=="Entrance continuous landing"||t.name.StartsWith("End facade extension -")))t.gameObject.SetActive(false);
+var inv=UnityEngine.Quaternion.Euler(0,-90,0);foreach(UnityEngine.Transform t in One("Laboratory Video Details")){bool structure=t.name=="Sloping corrugated canopy"||t.name=="Longitudinal roof purlin"||t.name=="Canopy gutter"||t.name=="Roof corrugation"||t.name=="Steel veranda post"||t.name=="Post foot"||t.name.StartsWith("Truss ");if(structure && t.position.x<1f && t.position.z<3.3f){t.position=inv*(t.position-new UnityEngine.Vector3(-8.25f,0,5.2f));t.rotation=inv*t.rotation;t.gameObject.SetActive(true);}}
+for(int i=1;i<=4;i++)Place("Turquoise entrance step "+i,new UnityEngine.Vector3(3.52f,.06f*i,1.41f+.36f*i),new UnityEngine.Vector3(2.35f,.12f*i,.36f));
+var mat=One("Entrance dark mat");mat.position=new UnityEngine.Vector3(3.2f,.465f,6.2f);mat.rotation=UnityEngine.Quaternion.Euler(0,-90,0);
+One("Stair approach concrete").position=new UnityEngine.Vector3(3.52f,.025f,-.75f);One("Red entry threshold").position=new UnityEngine.Vector3(3.52f,.03f,-3.32f);One("Approach anti slip grooves").position=UnityEngine.Vector3.zero;
+One("Entrance garden soil").position=new UnityEngine.Vector3(-.8f,.018f,.1f);One("Garden concrete edge").position=new UnityEngine.Vector3(1.95f,.13f,.1f);
+foreach(var t in a.Where(t=>t.name.StartsWith("Entrance hedge ")))t.position+=new UnityEngine.Vector3(5.92f,0,2.74f);
+foreach(var t in a.Where(t=>t.name.StartsWith("Tiered garden shrub")||t.name.StartsWith("Topiary trunk")))t.position+=new UnityEngine.Vector3(4.6f,0,1.4f);
+foreach(var t in a.Where(t=>t.name.StartsWith("Utility house ")||t.name=="Utility screened opening"||t.name=="White utility screen"))t.position+=new UnityEngine.Vector3(5.92f,0,2.74f);
+var sign=One("Site map sign - approved reconstruction");sign.position=new UnityEngine.Vector3(5.1f,0,2.6f);sign.rotation=UnityEngine.Quaternion.identity;
+var root=new UnityEngine.GameObject("Local video environment refinements").transform;UnityEditor.Undo.RegisterCreatedObjectUndo(root.gameObject,"Match local video");
+UnityEngine.Material Make(string n,UnityEngine.Color c){var m=new UnityEngine.Material(UnityEngine.Shader.Find("Universal Render Pipeline/Lit"));m.color=c;m.SetFloat("_Smoothness",.12f);UnityEditor.AssetDatabase.CreateAsset(m,"Assets/PLTS/ExteriorFinish/"+n+".mat");return m;}
+var concrete=Make("Video pale concrete",new UnityEngine.Color(.58f,.57f,.53f));var white=Make("Video opposite plaster",new UnityEngine.Color(.72f,.71f,.66f));var red=Make("Video dark red columns",new UnityEngine.Color(.3f,.05f,.04f));var dark=Make("Video shaded openings",new UnityEngine.Color(.055f,.065f,.06f));
+UnityEngine.GameObject Box(string n,UnityEngine.Vector3 p,UnityEngine.Vector3 size,UnityEngine.Material m){var g=UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube);g.name=n;g.transform.SetParent(root,false);g.transform.position=p;g.transform.localScale=size;g.GetComponent<UnityEngine.Renderer>().sharedMaterial=m;return g;}
+Box("Continuous concrete PV yard",new UnityEngine.Vector3(6.6f,.09f,11.3f),new UnityEngine.Vector3(8.6f,.08f,18.2f),concrete);
+Box("Roadside concrete sidewalk",new UnityEngine.Vector3(11.6f,.08f,11),new UnityEngine.Vector3(.85f,.12f,29),concrete);
+Box("Opposite sidewalk",new UnityEngine.Vector3(17f,.08f,11),new UnityEngine.Vector3(2,.12f,29),concrete);
+Box("Opposite campus low building",new UnityEngine.Vector3(21,1.8f,12),new UnityEngine.Vector3(6,3.6f,27),white);
+Box("Opposite veranda roof",new UnityEngine.Vector3(19,3.65f,12),new UnityEngine.Vector3(5,.16f,28),white);
+for(int i=0;i<7;i++){float z=.8f+i*3.7f;Box("Opposite red veranda column",new UnityEngine.Vector3(17.6f,1.8f,z),new UnityEngine.Vector3(.25f,3.6f,.25f),red);Box("Opposite shaded bay",new UnityEngine.Vector3(17.98f,1.65f,z+1.7f),new UnityEngine.Vector3(.035f,2.8f,2.7f),dark);}
+UnityEditor.AssetDatabase.SaveAssets();UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(s);UnityEditor.SceneManagement.EditorSceneManager.SaveScene(s);UnityEditor.Undo.CollapseUndoOperations(group);return ReviewExterior.Capture();

@@ -1,0 +1,17 @@
+var target=UnityEngine.SceneManagement.SceneManager.GetActiveScene();if(target.path!="Assets/Scenes/ITPLNCampusPLTS.unity"||UnityEditor.EditorApplication.isPlaying)throw new System.Exception("Scene guard");
+UnityEditor.SceneManagement.EditorSceneManager.SaveScene(target,"Backups/LayoutReview-20261123/BeforeDesktopPanels-20261125.unity",true);
+var all=target.GetRootGameObjects().SelectMany(g=>g.GetComponentsInChildren<UnityEngine.Transform>(true)).ToArray();
+if(all.Any(t=>t.name=="Exterior panels - PLTSDesktopTest layout"))throw new System.Exception("Already imported");
+var source=UnityEditor.SceneManagement.EditorSceneManager.OpenPreviewScene("Assets/Scenes/PLTSDesktopTest.unity");
+try{
+var station=source.GetRootGameObjects().Single(g=>g.name=="PLTS Learning Station");
+UnityEditor.Undo.IncrementCurrentGroup();int group=UnityEditor.Undo.GetCurrentGroup();
+var copy=UnityEngine.Object.Instantiate(station);copy.name="Exterior panels - PLTSDesktopTest layout";UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(copy,target);UnityEditor.Undo.RegisterCreatedObjectUndo(copy,"Match desktop panel layout");
+copy.transform.position=new UnityEngine.Vector3(1.9f,.13f,11f);copy.transform.rotation=UnityEngine.Quaternion.Euler(0,90,0);
+foreach(var t in all.Where(t=>t.name.StartsWith("PV Rack ")||t.name.StartsWith("Building side PV rack ")||t.name.StartsWith("PV rack ")||t.name=="Hanging PV interconnect"||t.name=="Longitudinal array channel")){UnityEditor.Undo.RecordObject(t.gameObject,"Preserve superseded arrays");t.gameObject.SetActive(false);}
+var rot=UnityEngine.Quaternion.Euler(0,90,0);var off=new UnityEngine.Vector3(1.9f,.13f,11f);
+foreach(var pair in new[]{new[]{"OffGridCabinet","OffGridCabinet"},new[]{"VentilatedEquipment","Battery Cabinet Case"}}){var old=source.GetRootGameObjects().FirstOrDefault(g=>g.name==pair[0]);var dst=all.FirstOrDefault(t=>t.name==pair[1]);if(old!=null&&dst!=null){UnityEditor.Undo.RecordObject(dst,"Align panel equipment");dst.position=rot*old.transform.position+off;dst.rotation=rot*old.transform.rotation;}}
+var sign=all.Single(t=>t.name=="Site map sign - approved reconstruction");UnityEditor.Undo.RecordObject(sign,"Turn sign sideways");sign.rotation=UnityEngine.Quaternion.Euler(0,-90,0);
+UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(target);UnityEditor.SceneManagement.EditorSceneManager.SaveScene(target);UnityEditor.Undo.CollapseUndoOperations(group);
+return new {panelGroups=copy.GetComponentsInChildren<UnityEngine.Transform>(true).Count(t=>t.name.StartsWith("Solar Panel -")),sourceUnchanged=true};
+}finally{UnityEditor.SceneManagement.EditorSceneManager.ClosePreviewScene(source);}

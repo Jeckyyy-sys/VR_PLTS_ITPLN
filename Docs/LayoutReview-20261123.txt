@@ -1,0 +1,42 @@
+Source: IMG_7484.MOV and supplied entrance photo. Positions are proportional estimates.
+Entrance: south/end facade, x=-2.4, z=2.86, yaw=0; clear opening 2.14 m, existing sliding leaves preserved.
+Canopy, trusses and posts moved together to cover entrance; continuous landing and four turquoise steps aligned.
+Approach, garden, hedge and screened utility house positioned beside the entrance; PV passage retained.
+Road and front fence colliders added; access gate and central passage remain open.
+Active XR Origin objects: 1. XR, input, package and render-pipeline settings were not edited.
+Missing script components in scene: 0
+Doorway clearance check passed (excluding the intended sliding leaves).
+Final review 2026-11-24:
+- Moved both topiary foliage and trunks beside the garden, clearing the entrance steps.
+- Extended curtain glazing and mullions along the former side-door facade.
+- Saved scene verified: no unsaved changes, 0 missing scripts, 0 missing materials/error shaders, 2 sliding-door components retained, doorway overlap check clear.
+- XR Origin retained. ProjectSettings and Packages file hashes match the pre-change snapshot.
+- OpenXRPackageSettings.asset hash changed during Unity script reload/import. No layout script configures XR; do not describe that asset as byte-identical or automatically discard its existing local changes.
+- Visual proportions estimated from supplied photo/video, not measured architectural dimensions. Headset interaction and performance not tested.
+- Restore point: Backups/LayoutReview-20261123/BeforeApply-20261124-162611.unity (scene only; original assets retained).
+Play Mode verification 2026-11-24: live frames advanced (126506 to 127641). Both LaboratorySlidingDoor components opened from local X +/-0.53 to +/-1.59 and closed back to +/-0.53. Toggle invoked via script, not physical XR controller input.
+Local video review (2026-11-24): WhatsApp Video 2026-11-24 at 20.09.52.mp4, 1024x576, duration 141.65 sec. Inspected nine interval frames plus start and 26 sec close-up. Evidence shows sign at stair/panel entrance boundary, narrow sidewalk, pale concrete yard and opposite low veranda building. Corrected sign position/scale, restored long-side laboratory entrance and canopy/steps alignment, added concrete yard and sidewalks, opposite building massing and approach hedge. Scene backup: BeforeLocalVideo-20261124.unity. Visual approximation only, not 100% reconstruction: real dimensions, exact opposite facade, detailed vegetation, paving wear and unseen surfaces remain unverified. Existing XR/input settings were not configured by these scene edits.
+2026-11-25 environment detail pass: approved entrance retained; placeholder spherical rear crown replaced using existing leaf mesh; pale sidewalk joints, roadside lime planters and connecting entrance paving added. Path connection is a layout adaptation to retained approved door, not a measured survey reconstruction. Backup BeforeEnvironmentDetail-20261125.unity. No XR configuration changes.
+2026-11-25 panel layout: copied PLTS Learning Station from read-only preview of PLTSDesktopTest.unity into active campus scene. All 11 panel local positions, rotations and scales match source. Whole group rotated +90 Y and translated (1.9,0.13,11) into yard. Old rack groups retained inactive. Existing cabinets aligned to source layout. Site-map sign yaw -90 facing lateral passage. Approved entrance retained. Backup BeforeDesktopPanels-20261125.unity. Source scene not saved or edited.
+2026-11-25 latest user correction: swapped the longitudinal locations of the two short roadside panels and the tall panel with both associated cabinets, using 5.707m translation. Main eight-panel building-side row, approved entrance and sideways site-map sign retained. Scene saved. Restore point: BeforePanelEndSwap-20261125.unity.
+
+2026-11-25 Interior reference pass - IMG_7468.MOV
+Reference sampled across 00:07 to 10:10 of the 10:28 video. Dimensions remain estimates; no claim of surveyed or 100 percent accuracy.
+Scene: Assets/Scenes/ITPLNCampusPLTS.unity
+Backup: Backups/LayoutReview-20261123/BeforeInterior7468-20261125-210844.unity
+Added root: PLTS Laboratory Interior / Interior video refinement IMG7468 (376 transforms).
+Changes: clear upper office panes and midrails, office TV, desk moved behind office partition, entrance display, cabinet backplate, cable tray, terminal blocks, supply cables and sleeves, rotary disconnect handles, projecting trainer lamp holders, MC4 branch connectors, mounting rail/clamp detail, overhead demonstration PV module.
+Builder: Assets/Editor/PLTSLayoutReview/InteriorVideo7468.cs. Backplate, desk relocation and entrance TV added through live editor API after builder pass.
+Verified visually: Screenshots/InteriorReview/Before and After (4 matching viewpoints).
+Verified against backup: door, exterior PV group and sign root transforms unchanged; XR Origin transform and component count unchanged. Missing scripts: 0.
+Limitations: cabinet interiors, exact label text, real measured room dimensions and photorealistic finishes remain incomplete. No headset or performance test performed. No commit or push.
+
+2026-11-25 Interior direction correction after user review
+User explicitly confirmed electrical/inverter bank is on the RIGHT when entering the main door.
+Evidence: IMG_7468.MOV 00:03 clearly shows left office, right electrical bank, rear battery racks and doorway; 06:10 confirms rear arrangement; 08:55 whiteboard/fire cabinet; 09:40 trainer beside entrance.
+Backup: Backups/LayoutReview-20261123/BeforeInteriorDirection-20261125-212353.unity
+Corrected equipment sides and retained prior models inactive. Rebuilt two Fuel Save Controller cabinets, one tall Multicluster enclosure, blue inverter, six rounded yellow inverters in two rows of three, clear distribution covers and internal switches, controller ducts/cables/meters, loose motors, two-level and low battery racks, red charger, wooden test bench and two yellow units.
+Moved Huawei display to front-left, corrected overhead PV pitch/span, added office front return/open door and longer side partition, front whiteboard/low cabinet/fire cabinet/bin, rear service door and gridded window. Rear notice textures use actual video pixels, not fabricated small print.
+Builders: Assets/Editor/PLTSLayoutReview/InteriorReferenceCorrection.cs, then work/FinishInteriorCorrection.cs (live eval).
+Views: Screenshots/InteriorReview/Corrected/View0.png through View4.png.
+Limitations: metric dimensions estimated; small unreadable details and exact electrical wiring not certified. No 100 percent likeness claim. Existing URP disables additional lights/shadows; graphics pipeline left unchanged. No headset performance test, commit, or push.
